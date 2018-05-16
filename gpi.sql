@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 15-05-2018 a las 21:19:23
+-- Tiempo de generación: 16-05-2018 a las 21:17:20
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -62,6 +62,15 @@ CREATE TABLE IF NOT EXISTS `lista_solicitados` (
   KEY `precio` (`precio`),
   KEY `numero_solicitud` (`numero_solicitud`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `lista_solicitados`
+--
+
+INSERT INTO `lista_solicitados` (`id_producto`, `numero_solicitud`, `cantidad`, `precio`) VALUES
+('1', 'SL2', 10, 3500),
+('3', 'SL2', 15, 6750),
+('5', 'SL2', 3, 4500);
 
 -- --------------------------------------------------------
 
@@ -123,6 +132,7 @@ INSERT INTO `personal` (`rut`, `nombre`, `area`, `especialidad`, `password`, `ob
 
 CREATE TABLE IF NOT EXISTS `productos` (
   `id` varchar(45) NOT NULL,
+  `precio` int(11) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
   `cantidad` int(45) NOT NULL,
   `unidad` set('Unid.','Caja','MI','Rollo','mts') NOT NULL DEFAULT 'Unid.',
@@ -134,17 +144,17 @@ CREATE TABLE IF NOT EXISTS `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id`, `descripcion`, `cantidad`, `unidad`, `certificado`) VALUES
-('1', 'Pino Tapa Canteada 1"x4"x3.0', 10000, 'Unid.', 'N/A'),
-('10', 'Cable Araflex RV-K  3X2,5mm2', 1200, 'mts', 'N/A'),
-('2', 'Pino Dimencionado Seco 1"x2"x3.20', 500, 'Unid.', 'N/A'),
-('3', 'Pino Dimencionado Seco 2"x2"x3.20', 400, 'Unid.', 'N/A'),
-('4', 'Pino Dimencionado Seco 2"x3"x3.20', 420, 'Unid.', 'N/A'),
-('5', 'Clavos 3"', 100, 'Caja', 'N/A'),
-('6', 'Manguera Transperente de 1/2 "', 20, 'MI', 'N/A'),
-('7', 'Huicha de medir 7,5 mts', 20, 'Unid.', 'N/A'),
-('8', 'Disco Sierra Circular 7"1/4 24 dientes', 50, 'Unid.', 'Si'),
-('9', 'Hoja Sierra Bimetal 18"', 30, 'Unid.', 'Si');
+INSERT INTO `productos` (`id`, `precio`, `descripcion`, `cantidad`, `unidad`, `certificado`) VALUES
+('1', 350, 'Pino Tapa Canteada 1"x4"x3.0', 10000, 'Unid.', 'N/A'),
+('10', 900, 'Cable Araflex RV-K  3X2,5mm2', 1200, 'mts', 'N/A'),
+('2', 400, 'Pino Dimencionado Seco 1"x2"x3.20', 500, 'Unid.', 'N/A'),
+('3', 450, 'Pino Dimencionado Seco 2"x2"x3.20', 400, 'Unid.', 'N/A'),
+('4', 520, 'Pino Dimencionado Seco 2"x3"x3.20', 420, 'Unid.', 'N/A'),
+('5', 1500, 'Clavos 3"', 100, 'Caja', 'N/A'),
+('6', 200, 'Manguera Transperente de 1/2 "', 20, 'MI', 'N/A'),
+('7', 4000, 'Huicha de medir 7,5 mts', 20, 'Unid.', 'N/A'),
+('8', 8900, 'Disco Sierra Circular 7"1/4 24 dientes', 50, 'Unid.', 'Si'),
+('9', 600, 'Hoja Sierra Bimetal 18"', 30, 'Unid.', 'Si');
 
 -- --------------------------------------------------------
 
@@ -168,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
 --
 
 INSERT INTO `solicitud` (`numero`, `number`, `fecha`, `solicitador`, `obra`) VALUES
-('SL1', 1, '2018-05-14 20:42:20', 'Jorge Urrutua', 'O1');
+('SL1', 2, '2018-05-14 20:42:20', 'Jorge Urrutua', 'O1'),
+('SL2', NULL, '2018-05-16 21:13:06', 'Jorge Urrutua', 'O1');
 
 -- --------------------------------------------------------
 

@@ -26,7 +26,7 @@
 	/*foreach($result as $row){
 		echo $row['ubicacion'];
 	}*/
-	$_SESSION['arreglo']=array();	
+	$_SESSION['arreglo']=array();
 	echo "<br><br><a href=nueva_solicitud.php>Nueva Solicitud</a>";	
 	echo "<br><br><a href=solicitudes_obra.php>Solicitudes de la Obra</a>";
 	echo "<br><br><a href=logout.php>Cerrar Sesión</a>";

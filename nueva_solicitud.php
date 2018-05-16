@@ -24,49 +24,41 @@
 	$sql="SELECT * FROM productos";
 	$result = $conexion->query($sql);
 	
-	echo "<form  method='post' action='nueva_solicitud.php'>";
-	echo "Seleccione un producto: <select name='producto' id='producto'>";
+	echo "<form  method='post' action='nueva_solicitud.php' align='center'>";
+	echo "<table align=center><tr><td>Seleccione un producto:</td><td><select name='producto' id='producto'>";
     while ($row = mysqli_fetch_assoc($result)){
 		$nombre=$row['descripcion'];
 		$id=$row['id'];
     	echo "<option value='$id'>'N° $id - $nombre'</option>";
     }
-	echo "</select>";
-	echo "<label>     Cantidad: </label> <input type='number' name='cantidad id='cantidad' min=0>";
-	echo "<input type='submit' name='Submit' value='Agregar'>";
-	echo "</form>";
+	echo "</select></td></tr>";
+	echo "<tr><td><label>Cantidad: </label></td><td><input type='number' name='cantidad' id='cantidad' min=0 required></td></tr>";
+	echo "<tr><td><input type='submit' name='Submit' value='Agregar'></td></tr>";
+	echo "</table></form><br>";
 	if(!empty($_POST['producto'])){
 		$eleccion = $_POST['producto'];
+		$cantidad = $_POST['cantidad'];
 		$temparray=$_SESSION['arreglo'];
-		array_push($temparray,$eleccion);
+		$producto=array($eleccion,$cantidad);
+		array_push($temparray,$producto);
 		$_SESSION['arreglo']=$temparray;
 		
-		foreach ($temparray as $elegido){
-			$sql="SELECT * FROM productos WHERE id='$elegido'";
+		echo '<table align="center" border="1">';
+		echo '<tr><td>ID</td><td>Descripción</td><td>Cantidad</td><td>Unidades</td></tr>';
+		foreach ($temparray as $producto){
+			$sql="SELECT * FROM productos WHERE id='$producto[0]'";
 			$result = $conexion->query($sql);
 			$row= mysqli_fetch_assoc($result);
-			echo $row['id']." ".$row['descripcion']."<br>";
+			$id=$row["id"];
+			$descripcion=$row["descripcion"];
+			$unidad=$row["unidad"];
+			echo "<tr><td>$id</td><td>$descripcion</td><td>$unidad</td><td>$producto[1]</td></tr>";
+			
 		}
-		
+		echo '</table>';
 	}
+	echo "<br><a href='agregar_solicitud.php'>Ingresar Solicitud de Materiales</a>";
 	
-	
-	/*$sql="SELECT number FROM solicitud WHERE numero='SL1'";
-	$result = $conexion->query($sql);
-	$row = $result->fetch_array(MYSQLI_ASSOC);
-	if (!empty($row)){
-		$nnext=$row['number']+1;
-	}
-	else{
-		$nnext=1;
-	}
-	$next="SL".$nnext;
-	$solicitador=$_SESSION['username'];
-	$obra=$_SESSION['obra'];
-	$sql="INSERT INTO solicitud(numero, solicitador, obra) VALUES ('$next','$solicitador','$obra')";
-	$result = $conexion->query($sql);
-	$sql="UPDATE solicitud SET number='$nnext' WHERE numero = 'SL1'";
-	$result = $conexion->query($sql);*/
 	mysqli_close($conexion);
 ?>
 
