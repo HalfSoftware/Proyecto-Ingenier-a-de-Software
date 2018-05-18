@@ -23,12 +23,10 @@
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	$obra=$row['obra'];
 	$_SESSION['obra']=$obra;
-	/*foreach($result as $row){
-		echo $row['ubicacion'];
-	}*/
+	
 	$_SESSION['arreglo']=array();
 	echo "<br><br><a href=nueva_solicitud.php>Nueva Solicitud</a>";	
-	echo "<br><br><a href=solicitudes_obra.php>Solicitudes de la Obra</a>";
+	echo "<br><br><a href=lista_solicitudes.php>Solicitudes de la Obra</a>";
 	echo "<br><br><a href=logout.php>Cerrar Sesión</a>";
 	mysqli_close($conexion);
 ?>

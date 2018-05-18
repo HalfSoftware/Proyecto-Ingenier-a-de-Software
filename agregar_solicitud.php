@@ -46,11 +46,9 @@
 		$cantidad=$producto[1];
 		$sql="INSERT INTO lista_solicitados(id_producto, numero_solicitud, cantidad, precio ) VALUES ('$id','$next','$cantidad','$precio')";
 		$result = $conexion->query($sql);
-		echo "<br>".$id." ".$next." ".$cantidad." ".$precio;
 	}
-	echo "<br><a href='obras.php'>Volver al Menú</a>";
-		//header('Location:obras.php')
 	mysqli_close($conexion);
+	header('Location:obras.php');	
 ?>
 </body>
 </html>

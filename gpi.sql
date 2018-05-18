@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-05-2018 a las 21:17:20
+-- Tiempo de generación: 18-05-2018 a las 20:38:21
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -68,9 +68,22 @@ CREATE TABLE IF NOT EXISTS `lista_solicitados` (
 --
 
 INSERT INTO `lista_solicitados` (`id_producto`, `numero_solicitud`, `cantidad`, `precio`) VALUES
-('1', 'SL2', 10, 3500),
-('3', 'SL2', 15, 6750),
-('5', 'SL2', 3, 4500);
+('1', 'SL1', 12, 4200),
+('1', 'SL4', 1, 350),
+('10', 'SL5', 12, 10800),
+('2', 'SL2', 12, 4800),
+('2', 'SL3', 20, 8000),
+('3', 'SL1', 12, 5400),
+('3', 'SL2', 32, 14400),
+('4', 'SL5', 5, 2600),
+('5', 'SL1', 5, 7500),
+('5', 'SL3', 4, 6000),
+('5', 'SL5', 5, 7500),
+('6', 'SL2', 1, 200),
+('7', 'SL1', 5, 20000),
+('7', 'SL5', 1, 4000),
+('9', 'SL2', 4, 2400),
+('9', 'SL4', 2, 1200);
 
 -- --------------------------------------------------------
 
@@ -168,18 +181,23 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `solicitador` varchar(100) NOT NULL,
   `obra` varchar(45) NOT NULL,
+  `estado` set('pendiente','solicitada','enviada a proveedores','recibida') NOT NULL DEFAULT 'pendiente',
   PRIMARY KEY (`numero`),
   KEY `solicitador` (`solicitador`,`obra`),
-  KEY `obra` (`obra`)
+  KEY `obra` (`obra`),
+  KEY `estado` (`estado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `solicitud`
 --
 
-INSERT INTO `solicitud` (`numero`, `number`, `fecha`, `solicitador`, `obra`) VALUES
-('SL1', 2, '2018-05-14 20:42:20', 'Jorge Urrutua', 'O1'),
-('SL2', NULL, '2018-05-16 21:13:06', 'Jorge Urrutua', 'O1');
+INSERT INTO `solicitud` (`numero`, `number`, `fecha`, `solicitador`, `obra`, `estado`) VALUES
+('SL1', 5, '2018-05-18 02:32:20', 'Jorge Urrutua', 'O1', 'pendiente'),
+('SL2', NULL, '2018-05-18 02:43:24', 'Jorge Urrutua', 'O1', 'pendiente'),
+('SL3', NULL, '2018-05-18 02:55:37', 'Jorge Urrutua', 'O1', 'pendiente'),
+('SL4', NULL, '2018-05-18 03:20:54', 'Rodrigo Fuentes', 'O2', 'pendiente'),
+('SL5', NULL, '2018-05-18 03:22:01', 'Rodrigo Fuentes', 'O2', 'pendiente');
 
 -- --------------------------------------------------------
 
