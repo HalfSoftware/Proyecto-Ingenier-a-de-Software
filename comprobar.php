@@ -8,9 +8,6 @@
 <body>
 <?php
 	session_start();
-?>
-
-<?php
 	$host_db = "localhost";
 	$user_db = "root";
 	$pass_db = "";
@@ -28,7 +25,7 @@
 	if ($result->num_rows > 0) {    
 	 }
 	 $row = $result->fetch_array(MYSQLI_ASSOC);
-	 if ($password==$row['password']) {
+	 if ( $password == $row['password'] ) {
 	    $_SESSION['loggedin'] = true;
 	    $_SESSION['username'] = $username;
 	    $_SESSION['start'] = time();
@@ -45,15 +42,14 @@
 			echo "<br><br><a href=ordenes.php>Ordenes de Compra</a>";
 			echo "<br><br><a href=modificar_ordenes.php>Actualizar Orden</a>";
 		}
+		elseif( $area == 'administracion'){
+			header('Location: admin/menu.php');
+		}
 		elseif($area=='contabilidad'){
 			echo "<br><br><a href=solicitudes.php>Solicitudes Pendientes</a>";
 			echo "<br><br><a href=ordenes.php>Ordenes de Compra</a>";	
 		}
-		else{
-			echo "<br><br><a href=solicitudes.php>Solicitudes Pendientes</a>";
-			echo "<br><br><a href=ordenes.php>Ordenes de Compra</a>";	
-		}
-	    
+
 	 } else {
 		echo "Username o Password estan incorrectos.";
 	   	echo "<br><a href='index.php'>Volver a Intentarlo</a>";
