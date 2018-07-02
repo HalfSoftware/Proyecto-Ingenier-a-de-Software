@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-05-2018 a las 20:38:21
+-- Tiempo de generación: 02-07-2018 a las 22:54:49
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -23,71 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `lista_compra`
---
-
-CREATE TABLE IF NOT EXISTS `lista_compra` (
-  `id_producto` varchar(45) NOT NULL,
-  `numero_solicitud_compra` varchar(45) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `precio` int(11) NOT NULL,
-  PRIMARY KEY (`id_producto`,`numero_solicitud_compra`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `lista_reservados`
---
-
-CREATE TABLE IF NOT EXISTS `lista_reservados` (
-  `id_producto` varchar(45) NOT NULL,
-  `numero_solicitud` varchar(45) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  PRIMARY KEY (`id_producto`,`numero_solicitud`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `lista_solicitados`
---
-
-CREATE TABLE IF NOT EXISTS `lista_solicitados` (
-  `id_producto` varchar(45) NOT NULL,
-  `numero_solicitud` varchar(45) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `precio` int(11) NOT NULL,
-  PRIMARY KEY (`id_producto`,`numero_solicitud`),
-  KEY `precio` (`precio`),
-  KEY `numero_solicitud` (`numero_solicitud`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `lista_solicitados`
---
-
-INSERT INTO `lista_solicitados` (`id_producto`, `numero_solicitud`, `cantidad`, `precio`) VALUES
-('1', 'SL1', 12, 4200),
-('1', 'SL4', 1, 350),
-('10', 'SL5', 12, 10800),
-('2', 'SL2', 12, 4800),
-('2', 'SL3', 20, 8000),
-('3', 'SL1', 12, 5400),
-('3', 'SL2', 32, 14400),
-('4', 'SL5', 5, 2600),
-('5', 'SL1', 5, 7500),
-('5', 'SL3', 4, 6000),
-('5', 'SL5', 5, 7500),
-('6', 'SL2', 1, 200),
-('7', 'SL1', 5, 20000),
-('7', 'SL5', 1, 4000),
-('9', 'SL2', 4, 2400),
-('9', 'SL4', 2, 1200);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `obra`
 --
 
@@ -96,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `obra` (
   `ubicacion` varchar(45) NOT NULL,
   `encargado` varchar(45) NOT NULL,
   `actividad` varchar(100) NOT NULL,
+  `estado` set('activa','terminada','pendiente') DEFAULT NULL,
   PRIMARY KEY (`obra`),
   KEY `encargado` (`encargado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -104,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `obra` (
 -- Volcado de datos para la tabla `obra`
 --
 
-INSERT INTO `obra` (`obra`, `ubicacion`, `encargado`, `actividad`) VALUES
-('O1', 'Santiago', 'Christopher Gonzales', 'Electricidad'),
-('O2', 'Talcahuano', 'Mauricio Rodriguez', 'Minería');
+INSERT INTO `obra` (`obra`, `ubicacion`, `encargado`, `actividad`, `estado`) VALUES
+('O1', 'Santiago', 'Christopher Gonzales', 'Electricidad', 'activa'),
+('O2', 'Talcahuano', 'Mauricio Rodriguez', 'Minería', 'activa');
 
 -- --------------------------------------------------------
 
@@ -135,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `personal` (
 INSERT INTO `personal` (`rut`, `nombre`, `area`, `especialidad`, `password`, `obra`) VALUES
 ('12.311.655-3', 'Jorge Urrutua', 'obras', 'Electricidad', '1234', 'O1'),
 ('13.121.548-6', 'Rodrigo Fuentes', 'obras', 'Mecánica', '1234', 'O2'),
+('16.211.920-1', 'admin', 'administracion', 'informática', '1234', NULL),
 ('9.002.781-5', 'Alexis Campos', 'bodega', 'Almacenamiento', '1234', NULL);
 
 -- --------------------------------------------------------
@@ -159,15 +96,42 @@ CREATE TABLE IF NOT EXISTS `productos` (
 
 INSERT INTO `productos` (`id`, `precio`, `descripcion`, `cantidad`, `unidad`, `certificado`) VALUES
 ('1', 350, 'Pino Tapa Canteada 1"x4"x3.0', 10000, 'Unid.', 'N/A'),
-('10', 900, 'Cable Araflex RV-K  3X2,5mm2', 1200, 'mts', 'N/A'),
+('10', 900, 'Cable Araflex RV-K  3X2,5mm2', 1188, 'mts', 'N/A'),
 ('2', 400, 'Pino Dimencionado Seco 1"x2"x3.20', 500, 'Unid.', 'N/A'),
-('3', 450, 'Pino Dimencionado Seco 2"x2"x3.20', 400, 'Unid.', 'N/A'),
-('4', 520, 'Pino Dimencionado Seco 2"x3"x3.20', 420, 'Unid.', 'N/A'),
-('5', 1500, 'Clavos 3"', 100, 'Caja', 'N/A'),
+('3', 450, 'Pino Dimencionado Seco 2"x2"x3.20', 380, 'Unid.', 'N/A'),
+('4', 520, 'Pino Dimencionado Seco 2"x3"x3.20', 395, 'Unid.', 'N/A'),
+('5', 1500, 'Clavos 3"', 90, 'Caja', 'N/A'),
 ('6', 200, 'Manguera Transperente de 1/2 "', 20, 'MI', 'N/A'),
-('7', 4000, 'Huicha de medir 7,5 mts', 20, 'Unid.', 'N/A'),
+('7', 4000, 'Huicha de medir 7,5 mts', 19, 'Unid.', 'N/A'),
 ('8', 8900, 'Disco Sierra Circular 7"1/4 24 dientes', 50, 'Unid.', 'Si'),
 ('9', 600, 'Hoja Sierra Bimetal 18"', 30, 'Unid.', 'Si');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productos_solicitados`
+--
+
+CREATE TABLE IF NOT EXISTS `productos_solicitados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` varchar(45) NOT NULL,
+  `nro_solicitud` varchar(45) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `estado` set('solicitado','reservado en bodega','recibido en bodega','enviado a adquisiciones','enviado a proveedores','recibido en obras','devuelto') NOT NULL DEFAULT 'solicitado',
+  PRIMARY KEY (`id`),
+  KEY `id_producto` (`id_producto`,`nro_solicitud`),
+  KEY `nro_solicitud` (`nro_solicitud`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `productos_solicitados`
+--
+
+INSERT INTO `productos_solicitados` (`id`, `id_producto`, `nro_solicitud`, `cantidad`, `estado`) VALUES
+(6, '1', 'SL1', 22, 'solicitado'),
+(7, '1', 'SL2', 22, 'solicitado'),
+(8, '4', 'SL3', 4, 'solicitado'),
+(9, '9', 'SL3', 3, 'solicitado');
 
 -- --------------------------------------------------------
 
@@ -181,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `solicitador` varchar(100) NOT NULL,
   `obra` varchar(45) NOT NULL,
-  `estado` set('pendiente','solicitada','enviada a proveedores','recibida') NOT NULL DEFAULT 'pendiente',
+  `estado` set('pendiente','reservada','solicitada','enviada a proveedores','recibida') NOT NULL DEFAULT 'pendiente',
   PRIMARY KEY (`numero`),
   KEY `solicitador` (`solicitador`,`obra`),
   KEY `obra` (`obra`),
@@ -193,37 +157,13 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
 --
 
 INSERT INTO `solicitud` (`numero`, `number`, `fecha`, `solicitador`, `obra`, `estado`) VALUES
-('SL1', 5, '2018-05-18 02:32:20', 'Jorge Urrutua', 'O1', 'pendiente'),
-('SL2', NULL, '2018-05-18 02:43:24', 'Jorge Urrutua', 'O1', 'pendiente'),
-('SL3', NULL, '2018-05-18 02:55:37', 'Jorge Urrutua', 'O1', 'pendiente'),
-('SL4', NULL, '2018-05-18 03:20:54', 'Rodrigo Fuentes', 'O2', 'pendiente'),
-('SL5', NULL, '2018-05-18 03:22:01', 'Rodrigo Fuentes', 'O2', 'pendiente');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `solicitud_compra`
---
-
-CREATE TABLE IF NOT EXISTS `solicitud_compra` (
-  `numero_compra` varchar(45) NOT NULL,
-  `numero_solicitud` varchar(45) NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lista_compra` varchar(45) NOT NULL,
-  PRIMARY KEY (`numero_compra`),
-  KEY `numero_solicitud` (`numero_solicitud`,`lista_compra`),
-  KEY `lista_compra` (`lista_compra`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+('SL1', 4, '2018-07-02 22:35:47', 'Rodrigo Fuentes', 'O2', 'pendiente'),
+('SL2', NULL, '2018-07-02 22:36:07', 'Rodrigo Fuentes', 'O2', 'pendiente'),
+('SL3', NULL, '2018-07-02 22:38:28', 'Rodrigo Fuentes', 'O2', 'pendiente');
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `lista_solicitados`
---
-ALTER TABLE `lista_solicitados`
-  ADD CONSTRAINT `lista_solicitados_ibfk_1` FOREIGN KEY (`numero_solicitud`) REFERENCES `solicitud` (`numero`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `personal`
@@ -232,17 +172,18 @@ ALTER TABLE `personal`
   ADD CONSTRAINT `personal_ibfk_1` FOREIGN KEY (`obra`) REFERENCES `obra` (`obra`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `productos_solicitados`
+--
+ALTER TABLE `productos_solicitados`
+  ADD CONSTRAINT `productos_solicitados_ibfk_2` FOREIGN KEY (`nro_solicitud`) REFERENCES `solicitud` (`numero`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `productos_solicitados_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
   ADD CONSTRAINT `solicitud_ibfk_1` FOREIGN KEY (`solicitador`) REFERENCES `personal` (`nombre`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `solicitud_ibfk_2` FOREIGN KEY (`obra`) REFERENCES `obra` (`obra`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `solicitud_compra`
---
-ALTER TABLE `solicitud_compra`
-  ADD CONSTRAINT `solicitud_compra_ibfk_1` FOREIGN KEY (`numero_solicitud`) REFERENCES `solicitud` (`numero`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
