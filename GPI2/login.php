@@ -4,22 +4,37 @@
 <meta charset="utf-8">
 <link rel="shortcut icon" href="logoGPI.png" type="image/x-icon">
 <title>Genarador de Solicitudes GPI</title>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" type = "text/css"/>
+<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+</style>
+<link href="floating-labels.css" rel="stylesheet">
 </head>
 
 <body>
-<h1>Login de Usuarios</h1>
+<form action="login.php" class="form-signin" method="post" >
+<div class="text-center mb-4">
+        <img class="mb-4" src="logoGPI.png" alt="" width="80" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Gestion de Procesos Industriales</h1>
+      </div>
 <hr>
-<form action="login.php" method="post" >
-	<label>Nombre Usuario:</label><br>
-	<input name="username" type="text" id="username" required>
-	<br><br>
-
+<label>Nombre:</label><br>
+<div class="form-label-group">
+	<input name="username" type="text" id="username" class="form-control" required> 
+	<label for="username">Nombre Usuario</label>
+</div>
 	<label>Contraseña:</label><br>
-	<input name="password" type="password" id="password" required>
+<div class="form-label-group">
+	<input name="password" type="password" id="password" class="form-control" required>
+	<label for="password">Contraseña</label>
+</div>
 	<br><br>
-	<input type="submit" name="Submit" value="Entrar">
+	<button class="btn btn-lg btn-primary btn-block" type="submit" name="Submit" value="Entrar">Entrar</button>
 </form>
-<hr>
 <?php	
 	$conexion = new mysqli("localhost", "root", "", "gpi");
 	if ($conexion->connect_error) {
