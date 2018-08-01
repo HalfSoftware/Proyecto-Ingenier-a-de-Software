@@ -136,6 +136,7 @@
 						$row= mysqli_fetch_assoc($result);
 						$id = $row["id"];
 						$descripcion = $row["descripcion"];
+						$cantidad = $producto[1];
 						$unidad = $row["unidad"];
 						echo "<tr><td>$id</td><td>$descripcion</td><td>$cantidad</td><td>$unidad</td></tr>";
 					}
